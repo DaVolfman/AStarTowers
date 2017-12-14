@@ -27,8 +27,8 @@ unsigned int tfact(unsigned int n, unsigned int const trunc = 1){
 	return rval;
 }*/
 
-#define numrings 3
-const int bitmask = (1 << numrings) - 1;
+int numrings = 3;
+int bitmask = (1 << numrings) - 1;
 
 /**
  * @brief Towers of Hanoi game state
@@ -284,6 +284,18 @@ int main(int argc, char** argv){
 
 	//map of all frontier nodes by their f() costs
 	multimap <int, PSNode *> frontier;
+
+	//if there are arguments attempt to update the number of rings from the first argument
+	if(argc == 2){
+		std::istringstream argument(argv[1]);
+		int tempnumrings = -1;
+		argument >> tempnumrings;
+
+		if(tempnumrings > 1){
+			numrings = tempnumrings;
+			bitmask = (1 << numrings)-1;
+		}
+	}
 
 	//node currently being evaluated, begins at problem start state;
 	PSNode *tempNode = new PSNode(towerstate(),NULL);
